@@ -7,7 +7,9 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Dodaj Grupę" Clicked="OnAddGroupClicked" />
+        <ToolbarItem Text="Edytuj Grupę" Clicked="OnEditGroupClicked" />
     </ContentPage.ToolbarItems>
+
 
     <CollectionView ItemsSource="{Binding Groups}"
                 SelectionMode="Multiple"

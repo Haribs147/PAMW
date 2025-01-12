@@ -12,6 +12,21 @@ namespace TodoApp.ViewModels
 
         public ObservableCollection<Group> Groups { get; } = new();
 
+        private bool _isEditMode;
+        public bool IsEditMode
+        {
+            get => _isEditMode;
+            set
+            {
+                if (_isEditMode != value)
+                {
+                    _isEditMode = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
         public GroupViewModel(TodoApiService apiService)
         {
             _apiService = apiService;

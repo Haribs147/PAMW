@@ -84,12 +84,29 @@ public partial class MainPage : ContentPage
 
 
     private async void OnGroupTapped(object sender, EventArgs e)
+{
+    if (sender is Label label && label.BindingContext is Group selectedGroup)
     {
-        if (sender is Label label && label.BindingContext is Group selectedGroup)
+        if (_viewModel.IsEditMode)
         {
-            await Navigation.PushAsync(new GroupDetailPage(selectedGroup, _apiService));
+            await Navigation.PushAsync(new EditGroupPage(selectedGroup, _apiService)); // Strona edycji grupy
+        }
+        else
+        {
+            await Navigation.PushAsync(new GroupDetailPage(selectedGroup, _apiService)); // Lista zadań
         }
     }
+}
+
+
+    private void OnEditGroupClicked(object sender, EventArgs e)
+    {
+        if (BindingContext is GroupViewModel groupViewModel)
+        {
+            groupViewModel.IsEditMode = !groupViewModel.IsEditMode;
+        }
+    }
+
 
 
 }
