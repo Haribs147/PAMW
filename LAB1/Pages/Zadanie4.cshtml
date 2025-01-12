@@ -1,0 +1,36 @@
+@page
+@model Zadanie4Model
+@{
+    ViewData["Title"] = "Zadanie 4 - Integracja JavaScriptu i Ajaxu";
+}
+
+<h2>Zadanie 4 - Integracja JavaScriptu i Ajaxu</h2>
+
+<form id="ajaxForm">
+    <div class="form-group">
+        <label for="dataInput">Wprowadź dane:</label>
+        <input type="text" class="form-control" id="dataInput" name="dataInput" required />
+    </div>
+
+    <button type="button" class="btn btn-primary" onclick="submitData()">Wyślij dane</button>
+</form>
+
+<div id="responseMessage" class="mt-3"></div>
+
+@section Scripts {
+    <script>
+        function submitData() {
+            var dataToSend = document.getElementById('dataInput').value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/Zadanie4/SubmitData', true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('responseMessage').innerText = 'Odpowiedź serwera: ' + xhr.responseText;
+                }
+            };
+            xhr.send(JSON.stringify({ data: dataToSend }));
+        }
+    </script>
+}

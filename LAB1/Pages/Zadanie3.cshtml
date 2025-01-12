@@ -1,0 +1,58 @@
+@page
+@model Zadanie3Model
+@{
+    ViewData["Title"] = "Zadanie 3 - Rejestracja";
+}
+
+<h2>Rejestracja</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Username">Nazwa użytkownika:</label>
+        <input type="text" class="form-control" id="Username" name="Username" value="@Model.Username" required/>
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Email">Email:</label>
+        <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" required/>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Password">Hasło:</label>
+        <input type="password" class="form-control" id="Password" name="Password"/>
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Zarejestruj się</button>
+</form>
+
+@if (ViewData["Username"] != null)
+{
+    <p><strong>Username:</strong> @ViewData["Username"]</p>
+    <p><strong>Email:</strong> @ViewData["Email"]</p>
+    <p><strong>Password:</strong> @ViewData["Password"]</p>
+}
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Custom jQuery validator for password complexity
+        $.validator.addMethod("passwordComplexity", function(value, element) {
+            return this.optional(element) || /^(?=.*[A-Z])(?=.*[!@@#$%^&*])(?=.*[0-9])(?=.*[a-z]).{6,}$/.test(value);
+        }, "Hasło musi zawierać co najmniej jedną dużą literę, jeden znak specjalny, jedną cyfrę i małą literę (6 znaków).");
+        
+        // Apply the custom rule to the password field
+        $(document).ready(function() {
+            $("form").validate({
+                rules: {
+                    Password: {
+                        passwordComplexity: true
+                    }
+                }
+            });
+        });
+    </script>
+}

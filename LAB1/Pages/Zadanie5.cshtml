@@ -1,0 +1,39 @@
+@page
+@model Zadanie5Model
+@{
+    ViewData["Title"] = "Zadanie 5 - Dynamiczny formularz z jQuery";
+}
+
+<h2>Zadanie 5 - Dynamiczny formularz z jQuery</h2>
+
+<form id="dynamicForm">
+    <div class="form-group">
+        <label for="nameInput">Wprowadź swoje imię:</label>
+        <input type="text" class="form-control" id="nameInput" name="nameInput" required />
+    </div>
+
+    <div id="additionalFields" class="form-group mt-3"></div>
+
+    <button type="button" class="btn btn-primary" onclick="addFields()">Dodaj pola</button>
+</form>
+
+@section Scripts {
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl7/3ga9t6Kd7LJ2Ej4rLVZDJPeDiXpj4CGGOfA48D" crossorigin="anonymous"></script>
+
+    <script>
+        function addFields() {
+            // Using jQuery to add new fields dynamically to the form
+            $('#additionalFields').append(`
+                <div class="form-group">
+                    <label for="emailInput">Wprowadź swój email:</label>
+                    <input type="email" class="form-control" id="emailInput" name="emailInput" required />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="phoneInput">Wprowadź swój numer telefonu:</label>
+                    <input type="text" class="form-control" id="phoneInput" name="phoneInput" required />
+                </div>
+            `);
+        }
+    </script>
+}

@@ -1,0 +1,51 @@
+@page
+@model Zadanie2Model
+
+@{
+    ViewData["Title"] = "Zadanie 2";
+}
+
+<h2>Wprowadź swoje dane</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Name">Imię:</label>
+        <input type="text" class="form-control" id="Name" name="Name" required/>
+    </div>
+    <div class="form-group">
+        <label for="Email">Email:</label>
+        <input type="email" class="form-control" id="Email" name="Email" required/>
+    </div>
+    <div class="form-group">
+        <label for="Message">Wiadomość:</label>
+        <textarea class="form-control" id="Message" name="Message" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Prześlij</button>
+</form>
+
+@if (Model.ShowData)
+{
+    <h3>Wprowadzone dane:</h3>
+    <p><strong>Imię:</strong> @Model.UserData.Name</p>
+    <p><strong>Email:</strong> @Model.UserData.Email</p>
+    <p><strong>Wiadomość:</strong> @Model.UserData.Message</p>
+}
+
+@*viewdata *@
+
+@* @if (ViewData["Name"] != null)
+{
+    <p><strong>Imię:</strong> @ViewData["Name"]</p>
+    <p><strong>Email:</strong> @ViewData["Email"]</p>
+    <p><strong>Wiadomość:</strong> @ViewData["Message"]</p>
+} *@
+
+
+@* sessionns *@
+
+@* @if (ViewData["Name"] != null)
+{
+    <p><strong>Imię:</strong> @ViewData["Name"]</p>
+    <p><strong>Email:</strong> @ViewData["Email"]</p>
+    <p><strong>Wiadomość:</strong> @ViewData["Message"]</p>
+} *@

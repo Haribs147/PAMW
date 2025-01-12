@@ -1,0 +1,120 @@
+@{
+    ViewData["Title"] = "Favorite Quotes";
+}
+
+<h2>Favorite Quotes</h2>
+
+<!-- Form for adding new quote -->
+<form id="quoteForm">
+    <div class="form-group">
+        <label for="quoteText">Quote</label>
+        <input type="text" class="form-control" id="quoteText" placeholder="Enter quote" required />
+    </div>
+    <div class="form-group">
+        <label for="quoteAuthor">Author</label>
+        <input type="text" class="form-control" id="quoteAuthor" placeholder="Enter author" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Add Quote</button>
+</form>
+
+<hr />
+
+<h3>Your Quotes</h3>
+
+<!-- Container for displaying quotes -->
+<ul id="quoteList" class="list-group"></ul>
+
+<script>
+function getQuotes() {
+    let quotes = localStorage.getItem('quotes');
+    return quotes ? JSON.parse(quotes) : [];
+}
+
+function saveQuotes(quotes) {
+    localStorage.setItem('quotes', JSON.stringify(quotes));
+}
+
+function renderQuotes() {
+    let quotes = getQuotes();
+    let quoteList = document.getElementById('quoteList');
+    quoteList.innerHTML = ''; 
+
+    quotes.forEach((quote, index) => {
+        let li = document.createElement('li');
+        li.className = 'list-group-item d-flex justify-content-between align-items-center';
+        
+        let quoteText = document.createElement('span');
+        quoteText.innerHTML = `"${quote.text}" - ${quote.author}`;
+        
+        let buttons = document.createElement('div');
+        
+        // Edit button
+        let editButton = document.createElement('button');
+        editButton.className = 'btn btn-sm btn-warning';
+        editButton.innerText = 'Edit';
+        editButton.onclick = function() {
+            editQuote(index);
+        };
+        
+        // Delete button
+        let deleteButton = document.createElement('button');
+        deleteButton.className = 'btn btn-sm btn-danger';
+        deleteButton.innerText = 'Delete';
+        deleteButton.onclick = function() {
+            deleteQuote(index);
+        };
+        
+        buttons.appendChild(editButton);
+        buttons.appendChild(deleteButton);
+        
+        li.appendChild(quoteText);
+        li.appendChild(buttons);
+        quoteList.appendChild(li);
+    });
+}
+
+// Function to add a new quote
+function addQuote(event) {
+    event.preventDefault();
+    
+    let quoteText = document.getElementById('quoteText').value;
+    let quoteAuthor = document.getElementById('quoteAuthor').value;
+    
+    if (quoteText && quoteAuthor) {
+        let quotes = getQuotes();
+        quotes.push({ text: quoteText, author: quoteAuthor });
+        saveQuotes(quotes);
+        renderQuotes();
+        
+        // Clear the form
+        document.getElementById('quoteForm').reset();
+    }
+}
+
+// Function to edit an existing quote
+function editQuote(index) {
+    let quotes = getQuotes();
+    let quote = quotes[index];
+    
+    let newQuoteText = prompt('Edit the quote text:', quote.text);
+    let newQuoteAuthor = prompt('Edit the quote author:', quote.author);
+    
+    if (newQuoteText && newQuoteAuthor) {
+        quotes[index] = { text: newQuoteText, author: newQuoteAuthor };
+        saveQuotes(quotes);
+        renderQuotes();
+    }
+}
+
+// Function to delete a quote
+function deleteQuote(index) {
+    let quotes = getQuotes();
+    quotes.splice(index, 1); // Remove the quote at the given index
+    saveQuotes(quotes);
+    renderQuotes();
+}
+
+// Initialize the app by rendering the stored quotes
+document.getElementById('quoteForm').addEventListener('submit', addQuote);
+document.addEventListener('DOMContentLoaded', renderQuotes);
+</script>
