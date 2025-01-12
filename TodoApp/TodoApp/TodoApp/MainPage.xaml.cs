@@ -104,6 +104,7 @@ public partial class MainPage : ContentPage
         if (BindingContext is GroupViewModel groupViewModel)
         {
             groupViewModel.IsEditMode = !groupViewModel.IsEditMode;
+            (sender as ToolbarItem).Text = groupViewModel.IsEditMode ? "Zakończ Edycję" : "Edytuj Grupę";
         }
     }
 

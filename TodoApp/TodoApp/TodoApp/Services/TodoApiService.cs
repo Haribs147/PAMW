@@ -11,7 +11,7 @@ namespace TodoApp.Services
         {
             _httpClient = httpClient;
         }
-        private const string BaseApiUrl = "http://10.0.2.2:5279/api"; //10.0.2.2 dla androida i localhost dla windowsa
+        private const string BaseApiUrl = "http://localhost:5279/api"; //10.0.2.2 dla androida i localhost dla windowsa
 
 
         public async Task<List<TodoTask>> GetTasksAsync()
